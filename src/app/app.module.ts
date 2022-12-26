@@ -11,13 +11,17 @@ import { fakeBackendProvider } from './helpers/fake-backend';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { HomeComponent } from './pages/home/home.component';
 import { Page404Component } from './pages/page404/page404.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlertComponent,
     HomeComponent,
-    Page404Component
+    Page404Component,
+    ModalComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
