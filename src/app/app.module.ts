@@ -13,6 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { Page404Component } from './pages/page404/page404.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { NetworkInterceptor } from './interceptors/network.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { NotificationComponent } from './components/notification/notification.co
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
     // provider used to create fake backend
     fakeBackendProvider
   ],
