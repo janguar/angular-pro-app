@@ -16,6 +16,7 @@ import { NotificationComponent } from './components/notification/notification.co
 import { NetworkInterceptor } from './interceptors/network.interceptor';
 import { MustMatchDirective } from './helpers/must-match.directive';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { AdminComponent } from './pages/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
     Page404Component,
     ModalComponent,
     NotificationComponent,
-    MustMatchDirective
+    MustMatchDirective,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

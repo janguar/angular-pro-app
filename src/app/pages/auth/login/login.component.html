@@ -1,6 +1,11 @@
 <div class="card">
   <h4 class="card-header">Login</h4>
   <div class="card-body">
+    <div class="alert alert-info">
+      <strong>Normal User</strong> - U: user P: user<br />
+      <strong>Administrator</strong> - U: admin P: admin
+    </div>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label class="form-label">Username</label>

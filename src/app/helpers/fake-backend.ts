@@ -7,15 +7,11 @@ import { Role } from '../models/role-model';
 // array in local storage for registered users
 const usersKey = 'angular-11-crud-example-users';
 const usersJSON = localStorage.getItem(usersKey);
-let users: any[] = usersJSON ? JSON.parse(usersJSON) : [{
-  id: 1,
-  title: 'Mr',
-  firstName: 'Joe',
-  lastName: 'Bloggs',
-  email: 'joe@bloggs.com',
-  role: Role.User,
-  password: 'joe123'
-}];
+let users: any[] = usersJSON ? JSON.parse(usersJSON) : [
+  { id: 1, title: 'Mr', firstName: 'Joe', lastName: 'Bloggs', email: 'joe@mail.com', role: Role.User, username: 'joe', password: 'joe123' },
+  { id: 2, title: "Admin", firstName: 'Admin', lastName: 'Admin', email: 'jadminoe@mail.com', role: Role.Admin, username: 'admin', password: 'admin123' },
+  { id: 3, title: "User", firstName: 'User', lastName: 'User', email: 'user@mail.com', role: Role.User, username: 'user', password: 'user' }
+];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -49,13 +45,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     // route functions
 
     function authenticate() {
+      console.log(body);
       const { username, password } = body;
       const user = users.find(x => x.username === username && x.password === password);
       if (!user) return error('Username or password is incorrect');
+      // return ok({
+      //   ...basicDetails(user),
+      //   token: 'fake-jwt-token'
+      // })
       return ok({
-        ...basicDetails(user),
-        token: 'fake-jwt-token'
-      })
+        id: user.id,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        token: `fake-jwt-token.${user.id}`
+      });
     }
 
     function register() {
@@ -136,6 +141,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         .pipe(materialize(), delay(500), dematerialize()); // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648);
     }
 
+    function unauthorized() {
+      return throwError(() => ({ status: 401, error: { message: 'unauthorized' } }))
+        .pipe(materialize(), delay(500), dematerialize()); // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648);
+    }
+
     function basicDetails(user: any) {
       const { id, title, firstName, lastName, email, role } = user;
       return { id, title, firstName, lastName, email, role };
@@ -145,6 +155,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       const urlParts = url.split('/');
       return parseInt(urlParts[urlParts.length - 1]);
     }
+
+    function isLoggedIn() {
+      const authHeader = headers.get('Authorization') || '';
+      return authHeader.startsWith('Bearer fake-jwt-token');
+    }
+
+    function isAdmin() {
+      return currentUser()?.role === Role.Admin;
+    }
+
+    function currentUser() {
+      if (!isLoggedIn()) return;
+      const id = parseInt(headers.get('Authorization')!.split('.')[1]);
+      return users.find(x => x.id === id);
+    }
+
 
     function newUserId() {
       return users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
