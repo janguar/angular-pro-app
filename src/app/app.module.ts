@@ -15,6 +15,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NetworkInterceptor } from './interceptors/network.interceptor';
 import { MustMatchDirective } from './helpers/must-match.directive';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MustMatchDirective } from './helpers/must-match.directive';
     HttpClientModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
     // provider used to create fake backend
