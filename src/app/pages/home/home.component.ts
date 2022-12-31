@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, VERSION } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { concatMap } from 'rxjs';
 import { LoadingService } from 'src/app/helpers/loading.service';
 
@@ -36,5 +37,14 @@ export class HomeComponent {
         console.log(res);
       });
 
+  }
+
+  onSubmit(f: NgForm) {
+    // stop here if form is invalid
+    if (f.invalid) {
+      return;
+    }
+
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(f.value, null, 4));
   }
 }

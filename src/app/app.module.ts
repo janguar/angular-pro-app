@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,7 @@ import { Page404Component } from './pages/page404/page404.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NetworkInterceptor } from './interceptors/network.interceptor';
+import { MustMatchDirective } from './helpers/must-match.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NetworkInterceptor } from './interceptors/network.interceptor';
     HomeComponent,
     Page404Component,
     ModalComponent,
-    NotificationComponent
+    NotificationComponent,
+    MustMatchDirective
   ],
   imports: [
     BrowserModule,

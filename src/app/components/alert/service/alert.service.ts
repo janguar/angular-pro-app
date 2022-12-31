@@ -1,6 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Subject, Observable, filter } from "rxjs";
-import { Alert, AlertType } from "../models/alert.model";
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { Alert, AlertOptions, AlertType } from '../models/alert.model';
+
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
@@ -13,31 +15,30 @@ export class AlertService {
   }
 
   // convenience methods
-  success(message: string, options?: Partial<Alert>) {
-    this.alert(message, AlertType.Success, options);
+  success(message: string, options?: AlertOptions) {
+    this.alert(new Alert({ ...options, type: AlertType.Success, message }));
   }
 
-  error(message: string, options?: Partial<Alert>) {
-    this.alert(message, AlertType.Error, options);
+  error(message: string, options?: AlertOptions) {
+    this.alert(new Alert({ ...options, type: AlertType.Error, message }));
   }
 
-  info(message: string, options?: Partial<Alert>) {
-    this.alert(message, AlertType.Info, options);
+  info(message: string, options?: AlertOptions) {
+    this.alert(new Alert({ ...options, type: AlertType.Info, message }));
   }
 
-  warn(message: string, options?: Partial<Alert>) {
-    this.alert(message, AlertType.Warning, options);
+  warn(message: string, options?: AlertOptions) {
+    this.alert(new Alert({ ...options, type: AlertType.Warning, message }));
   }
 
   // main alert method
-  alert(message: string, type: AlertType, options: Partial<Alert> = {}) {
-    const id = options.id || this.defaultId;
-    const alert = new Alert(id, type, message, options.autoClose, options.keepAfterRouteChange);
+  alert(alert: Alert) {
+    alert.id = alert.id || this.defaultId;
     this.subject.next(alert);
   }
 
   // clear alerts
   clear(id = this.defaultId) {
-    this.subject.next(new Alert(id));
+    this.subject.next(new Alert({ id }));
   }
 }
