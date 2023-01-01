@@ -17,6 +17,7 @@ import { NetworkInterceptor } from './interceptors/network.interceptor';
 import { MustMatchDirective } from './helpers/must-match.directive';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { AdminComponent } from './pages/admin/admin.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AdminComponent } from './pages/admin/admin.component';
     ModalComponent,
     NotificationComponent,
     MustMatchDirective,
-    AdminComponent
+    AdminComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

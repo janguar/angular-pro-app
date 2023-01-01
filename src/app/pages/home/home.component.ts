@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, VERSION } from '@angular/core';
+import { Component, SimpleChanges, VERSION } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { concatMap, first } from 'rxjs';
 import { LoadingService } from 'src/app/helpers/loading.service';
@@ -18,6 +18,13 @@ export class HomeComponent {
   loading = false;
   user: User;
   userFromApi?: User;
+
+  // paging
+  items: any[] = [];
+  pageOfItems?: Array<any>;
+  sortProperty: string = 'id';
+  sortOrder = 1;
+
   constructor(public loader: LoadingService, private http: HttpClient,
     private userService: UserService,
     private authenticationService: AuthService) {
@@ -64,5 +71,45 @@ export class HomeComponent {
       this.loading = false;
       this.userFromApi = user;
     });
+
+    this.http.get<any[]>('/items')
+      .subscribe(x => {
+        this.items = x;
+        console.log("Items: ", this.items);
+        this.loading = false;
+      });
+  }
+
+
+  /**
+    Paging
+   */
+
+  onChangePage(pageOfItems: Array<any>) { //
+    // update current page of items
+    this.pageOfItems = pageOfItems;
+  }
+
+  sortBy(property: string) {
+    this.sortOrder = property === this.sortProperty ? (this.sortOrder * -1) : 1;
+    this.sortProperty = property;
+    this.items = [...this.items.sort((a: any, b: any) => {
+      // sort comparison function
+      let result = 0;
+      if (a[property] < b[property]) {
+        result = -1;
+      }
+      if (a[property] > b[property]) {
+        result = 1;
+      }
+      return result * this.sortOrder;
+    })];
+  }
+
+  sortIcon(property: string) {
+    if (property === this.sortProperty) {
+      return this.sortOrder === 1 ? '☝️' : '👇';
+    }
+    return '';
   }
 }

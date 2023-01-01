@@ -1,38 +1,68 @@
-<div class="p-4">
-  <div class="container">
-    <h1>Angular {{version}} - CRUD Example with Reactive Forms</h1>
-    <p>An example app showing how to list, add, edit and delete user records with Angular {{version}}.</p>
-    <p><a routerLink="/users">&gt;&gt; Manage Users</a></p>
+<div class="container my-4">
+  <h1>Angular {{version}} - CRUD Example with Reactive Forms</h1>
+  <p>An example app showing how to list, add, edit and delete user records with Angular {{version}}.</p>
+  <p><a routerLink="/users">&gt;&gt; Manage Users</a></p>
 
 
-    <div class="card mt-4">
-      <h4 class="card-header">Home</h4>
-      <div class="card-body">
-        <p>You're logged in with Angular 14 & JWT!!</p>
-        <p>Your role is: <strong>{{user.role}}</strong>.</p>
-        <p>This page can be accessed by <u>all authenticated users</u>.</p>
-        <p class="mb-1">Current user from secure api end point:</p>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="userFromApi">
-          <li>{{userFromApi.firstName}} {{userFromApi.lastName}}</li>
-        </ul>
-      </div>
+  <div class="card">
+    <h4 class="card-header">Home</h4>
+    <div class="card-body">
+      <p>You're logged in with Angular 14 & JWT!!</p>
+      <p>Your role is: <strong>{{user.role}}</strong>.</p>
+      <p>This page can be accessed by <u>all authenticated users</u>.</p>
+      <p class="mb-1">Current user from secure api end point:</p>
+      <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+      <ul *ngIf="userFromApi">
+        <li>{{userFromApi.firstName}} {{userFromApi.lastName}}</li>
+      </ul>
     </div>
-
-    <div class="content">
-      <button class="btn btn-primary btn-small" (click)="loader.show()">Show loader</button>
-      <button class="btn btn-primary btn-small" (click)="loader.hide()">Hide loader</button>
-      <button class="btn btn-primary btn-small" (click)="fetchData()">Fetch Data</button>
-      <button class="btn btn-primary btn-small" (click)="fetchMultipleData()">
-        Fetch Multiple Data
-      </button>
-
-    </div>
-
-    <ng-container *ngIf="loading$ | async">
-      <div class="overlay"></div>
-      <!-- <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner> -->
-      <div class="loader"></div>
-    </ng-container>
   </div>
+
+  <div class="container">
+    <button class="btn btn-primary btn-small" (click)="loader.show()">Show loader</button>
+    <button class="btn btn-primary btn-small" (click)="loader.hide()">Hide loader</button>
+    <button class="btn btn-primary btn-small" (click)="fetchData()">Fetch Data</button>
+    <button class="btn btn-primary btn-small" (click)="fetchMultipleData()">
+      Fetch Multiple Data
+    </button>
+
+  </div>
+
+  <div class="container">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th><a (click)="sortBy('id')">Id {{sortIcon('id')}}</a></th>
+          <th><a (click)="sortBy('firstName')">First Name {{sortIcon('firstName')}}</a></th>
+          <th><a (click)="sortBy('lastName')">Last Name {{sortIcon('lastName')}}</a></th>
+          <th><a (click)="sortBy('age')">Age {{sortIcon('age')}}</a></th>
+          <th><a (click)="sortBy('company')">Company {{sortIcon('company')}}</a></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of pageOfItems">
+          <td>{{item.id}}</td>
+          <td>{{item.firstName}}</td>
+          <td>{{item.lastName}}</td>
+          <td>{{item.age}}</td>
+          <td>{{item.company}}</td>
+        </tr>
+        <tr *ngIf="loading">
+          <td colspan="5" class="text-center py-5">
+            <span class="spinner-border spinner-border-lg align-center"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-footer pb-0 pt-3">
+      <pagination [items]="items" (changePage)="onChangePage($event)"></pagination>
+    </div>
+  </div>
+
+  <ng-container *ngIf="loading$ | async">
+    <div class="overlay"></div>
+    <!-- <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner> -->
+    <div class="loader"></div>
+  </ng-container>
 </div>

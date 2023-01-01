@@ -4,12 +4,14 @@ import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
 import { Role } from '../models/role-model';
 
+import items from './fake-backend-data';
+
 // array in local storage for registered users
 const usersKey = 'angular-11-crud-example-users';
 const usersJSON = localStorage.getItem(usersKey);
 let users: any[] = usersJSON ? JSON.parse(usersJSON) : [
   { id: 1, title: 'Mr', firstName: 'Joe', lastName: 'Bloggs', email: 'joe@mail.com', role: Role.User, username: 'joe', password: 'joe123' },
-  { id: 2, title: "Admin", firstName: 'Admin', lastName: 'Admin', email: 'jadminoe@mail.com', role: Role.Admin, username: 'admin', password: 'admin123' },
+  { id: 2, title: "Admin", firstName: 'Admin', lastName: 'Admin', email: 'jadminoe@mail.com', role: Role.Admin, username: 'admin', password: 'admin' },
   { id: 3, title: "User", firstName: 'User', lastName: 'User', email: 'user@mail.com', role: Role.User, username: 'user', password: 'user' }
 ];
 
@@ -36,6 +38,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return updateUser();
         case url.match(/\/users\/\d+$/) && method === 'DELETE':
           return deleteUser();
+        // paing
+        case url.endsWith('/items') && method === 'GET':
+          return ok(items);
         default:
           // pass through any requests not handled above
           return next.handle(request);
