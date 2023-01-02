@@ -10,6 +10,9 @@ const morgan = require('morgan');
 const cron = require('node-cron');
 const sequelize = require('./helpers/database');
 const User = require('./models/user.model');
+const Article = require('./models/article.model');
+const Role = require('./models/role.model');
+
 const app = express();
 
 sequelize.sync(
@@ -26,7 +29,19 @@ sequelize.sync(
       password: 'P4ssword'
     }
     await User.create(user);
+
+    const article = {
+      content: `article content ${i}`
+    }
+    await Article.create(article);
+
+
   }
+
+  const role1 = {name: `admin`}
+  const role2 = {name: `user`}
+  await Role.create(role1);
+  await Role.create(role2);
 })
 
 app.use(bodyParser.urlencoded({extended: false}));
