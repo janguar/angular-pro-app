@@ -1,5 +1,5 @@
 const {Model,DataTypes} = require('sequelize');
-const sequelize = require("../helpers/database");
+const sequelize = require("../config/database");
 
 class Article extends Model {};
 

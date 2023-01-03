@@ -1,6 +1,6 @@
 
 var {DataTypes,Model} = require('sequelize');
-const sequelize = require("../helpers/database");
+const sequelize = require("../config/database");
 
 
 class Role extends Model {}
