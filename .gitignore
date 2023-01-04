@@ -1,6 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 node_modules/*
 server/node_modules/*
+server/database.sqlite
+server/dev.sqlite
 server/screens
 .vscode
 # Compiled output
@@ -45,3 +47,4 @@ testem.log
 Thumbs.db
 server/database-test.sqlite
 server/database-test.sqlite
+server/.env
