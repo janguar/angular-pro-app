@@ -1,0 +1,12 @@
+ul {
+  display: flex;
+  list-style: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  li {
+    padding: 5px;
+  }
+}

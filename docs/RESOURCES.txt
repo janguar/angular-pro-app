@@ -1,0 +1,13 @@
+https://www.bezkoder.com/node-js-upload-excel-file-database/
+
+https://www.bezkoder.com/node-js-upload-image-mysql/
+
+https://www.bezkoder.com/node-js-express-file-upload/
+
+https://attacomsian.com/blog/uploading-files-nodejs-express
+
+Angular
+
+https://ngneat.github.io/hot-toast/#examples
+
+https://javascript.plainenglish.io/creating-a-tooltip-directive-in-angular-abfc607d52f3

@@ -1,9 +1,7 @@
 <div class="container my-4">
-  <h1>Angular {{version}} - CRUD Example with Reactive Forms</h1>
+  <h1>Angular {{version}} - Examples</h1>
   <p>An example app showing how to list, add, edit and delete user records with Angular {{version}}.</p>
   <p><a routerLink="/users">&gt;&gt; Manage Users</a></p>
-
-
   <div class="card">
     <h4 class="card-header">Home</h4>
     <div class="card-body">
@@ -18,7 +16,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div style="display: flex;">
     <button class="btn btn-primary btn-small" (click)="loader.show()">Show loader</button>
     <button class="btn btn-primary btn-small" (click)="loader.hide()">Hide loader</button>
     <button class="btn btn-primary btn-small" (click)="fetchData()">Fetch Data</button>
@@ -26,8 +24,52 @@
       Fetch Multiple Data
     </button>
 
+    <button class="btn btn-primary btn-small" (click)="showToast()">
+      Show Toast
+    </button>
+
+    <!-- tooltip -->
+    <button class="user-icon" [tooltip]="'Sign In'">tooltip</button>
+
+    <!-- <div class="flex">
+      <p>Some data:</p>
+      <div *skeleton="isLoading;
+                    height: '20px';
+                    width: '200px'">
+        Item
+      </div>
+    </div>
+
+    <section class="flex">
+
+      <ng-container *skeleton="isLoading;
+                               repeat: 5;
+                               className: 'mb-2';
+                               height: '100px';">
+
+        <div *ngFor="let num of [1,2, 3]">
+          {{ num }}
+        </div>
+
+      </ng-container>
+    </section>
+
+    <ng-container *skeleton="isLoading;
+                             repeat: 5;
+                             className: 'mb-2';
+                             height: '30px';
+                             width: 'rand'">
+
+      <div *ngFor="let num of [1,2, 3, 4, 5]">
+        {{ num }}
+      </div>
+
+    </ng-container> -->
+
   </div>
 
+
+  <!-- Pagination -->
   <div class="container">
     <table class="table table-striped table-sm">
       <thead>
@@ -59,10 +101,13 @@
       <pagination [items]="items" (changePage)="onChangePage($event)"></pagination>
     </div>
   </div>
+  <!-- Pagination -->
 
+
+  <!-- Full page loader -->
   <ng-container *ngIf="loading$ | async">
     <div class="overlay"></div>
-    <!-- <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner> -->
     <div class="loader"></div>
   </ng-container>
+  <!-- Full page loader -->
 </div>

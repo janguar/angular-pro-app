@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, SimpleChanges, VERSION } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HotToastService } from '@ngneat/hot-toast';
 import { concatMap, first } from 'rxjs';
 import { LoadingService } from 'src/app/helpers/loading.service';
 import { User } from 'src/app/models/user-model';
 import { AuthService } from '../auth/services/auth.service';
 import { UserService } from '../users/services/user.service';
+import { NotificationService } from '../../components/notification/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -27,9 +29,28 @@ export class HomeComponent {
 
   constructor(public loader: LoadingService, private http: HttpClient,
     private userService: UserService,
-    private authenticationService: AuthService) {
+    private authenticationService: AuthService,
+    private toast: HotToastService,
+    notify: NotificationService) {
     this.user = <User>this.authenticationService.userValue;
   }
+
+
+  showToast() {
+    this.toast.info("I must be super-useful!", {
+      duration: 500, position: "bottom-center", autoClose: true,
+      style: {
+        border: '1px solid #713200',
+        padding: '16px',
+        color: '#713200',
+      },
+      iconTheme: {
+        primary: '#713200',
+        secondary: '#FFFAEE',
+      },
+    })
+  }
+
 
   fetchData() {
     this.http
